@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "auth/email-already-in-use": "هذا البريد الإلكتروني مستخدم بالفعل. جرّب تسجيل الدخول.",
       "auth/invalid-email": "صيغة البريد الإلكتروني غير صحيحة.",
       "auth/weak-password": "كلمة المرور ضعيفة. استخدم 6 أحرف على الأقل.",
+      "auth/password-does-not-meet-requirements": "كلمة المرور لا تستوفي الشروط (استخدم أحرفًا كبيرة وصغيرة وأرقام).",
       "auth/missing-password": "اكتب كلمة المرور.",
       "auth/user-not-found": "لا يوجد حساب بهذا البريد الإلكتروني.",
       "auth/wrong-password": "كلمة المرور غير صحيحة.",
@@ -40,15 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
       "auth/too-many-requests": "تم إيقاف المحاولات مؤقتًا لكثرة المحاولات. حاول بعد قليل.",
       "auth/operation-not-allowed": "تسجيل الدخول بالبريد وكلمة المرور غير مفعّل في Firebase Authentication.",
       "auth/invalid-api-key": "مفتاح Firebase غير صحيح. راجع firebase-config.js.",
-      "auth/api-key-not-valid.-please-pass-a-valid-api-key": "مفتاح Firebase غير صحيح. راجع firebase-config.js.",
       "auth/app-not-authorized": "الدومين الحالي غير مضاف إلى Authorized domains في Firebase Authentication.",
       "auth/network-request-failed": "تعذر الاتصال بـ Firebase. تحقق من الإنترنت وحاول مرة أخرى.",
       "auth/internal-error": "حدث خطأ داخلي في Firebase. راجع إعدادات المشروع ثم حاول مرة أخرى."
     };
 
     if (map[code]) return map[code];
-    if (code.includes("invalid-api-key")) return "مفتاح Firebase غير صحيح. راجع firebase-config.js.";
-    if (code.includes("app-not-authorized")) return "الدومين الحالي غير مضاف إلى Authorized domains في Firebase Authentication.";
+    if (code.includes("permission-denied")) return "تم إنشاء الحساب لكن تعذر حفظ البيانات الشخصية. تحقق من نشر firestore.rules.";
     return `تعذر تنفيذ العملية (${code || "unknown"}). افتح Console لمعرفة الخطأ التفصيلي.`;
   }
 
@@ -98,15 +97,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await user.updateProfile({ displayName: name });
 
-      // Create the profile before redirecting to booking.
-      await db.collection("users").doc(user.uid).set({
-        uid: user.uid,
-        name,
-        phone,
-        email,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
+      // محاولة إنشاء ملف البروفايل دون إيقاف العملية في حالة وجود خطأ قواعد
+      try {
+        await db.collection("users").doc(user.uid).set({
+          uid: user.uid,
+          name,
+          phone,
+          email,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+      } catch (dbErr) {
+        console.warn("Firestore profile creation non-blocking error:", dbErr);
+      }
 
       showMsg("تم إنشاء الحساب بنجاح. جاري فتح صفحة الحجز...", "ok");
       const params = new URLSearchParams(location.search);
@@ -157,3 +160,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+             
