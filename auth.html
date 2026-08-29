@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول — مكتب المحامي بالنقض محمد إسماعيل محمد</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <div class="seal"><span>م إ</span></div>
+      <div class="brand-text"><b>محمد إسماعيل محمد</b><small>المحامي بالنقض</small></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#services">مجالات العمل</a>
+      <a href="index.html#about">عن المكتب</a>
+      <a href="index.html#location">الموقع</a>
+    </div>
+    <div class="nav-actions">
+      <a href="booking.html" class="btn btn-brass btn-sm">احجز استشارة</a>
+      <button class="menu-toggle" aria-label="القائمة">☰</button>
+    </div>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow">حسابك الشخصي</div>
+    <h1 style="font-size:clamp(1.8rem,3vw,2.4rem);">تسجيل الدخول أو إنشاء حساب</h1>
+  </div>
+</div>
+
+<div class="form-shell">
+  <div class="card">
+    <div class="form-tabs">
+      <button id="tab-login" class="active" type="button">تسجيل الدخول</button>
+      <button id="tab-register" type="button">حساب جديد</button>
+    </div>
+
+    <form id="form-login">
+      <div class="field">
+        <label for="log-email">البريد الإلكتروني</label>
+        <input type="email" id="log-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="log-password">كلمة المرور</label>
+        <input type="password" id="log-password" required autocomplete="current-password" minlength="6">
+      </div>
+      <button type="submit" class="btn btn-brass btn-block">دخول</button>
+    </form>
+
+    <form id="form-register" style="display:none;">
+      <div class="field">
+        <label for="reg-name">الاسم بالكامل</label>
+        <input type="text" id="reg-name" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="reg-phone">رقم الهاتف</label>
+        <input type="tel" id="reg-phone" required autocomplete="tel" placeholder="01xxxxxxxxx">
+      </div>
+      <div class="field">
+        <label for="reg-email">البريد الإلكتروني</label>
+        <input type="email" id="reg-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="reg-password">كلمة المرور</label>
+        <input type="password" id="reg-password" required autocomplete="new-password" minlength="6">
+        <div class="hint">6 أحرف على الأقل</div>
+      </div>
+      <button type="submit" class="btn btn-brass btn-block">إنشاء الحساب</button>
+    </form>
+
+    <div id="auth-msg" class="form-msg"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="container footer-bottom" style="border-top:none;padding-top:0;">
+    <span>© 2026 مكتب المحامي بالنقض محمد إسماعيل محمد. جميع الحقوق محفوظة.</span>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="main.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>

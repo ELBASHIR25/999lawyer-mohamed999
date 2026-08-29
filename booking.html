@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حجز موعد — مكتب المحامي بالنقض محمد إسماعيل محمد</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <div class="seal"><span>م إ</span></div>
+      <div class="brand-text"><b>محمد إسماعيل محمد</b><small>المحامي بالنقض</small></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#services">مجالات العمل</a>
+      <a href="index.html#about">عن المكتب</a>
+      <a href="index.html#location">الموقع</a>
+    </div>
+    <div class="nav-actions">
+      <a href="dashboard.html" class="btn btn-ghost btn-sm" data-auth-link>لوحة التحكم</a>
+      <button class="menu-toggle" aria-label="القائمة">☰</button>
+    </div>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow">حجز استشارة</div>
+    <h1 style="font-size:clamp(1.8rem,3vw,2.4rem);">مرحبًا، <span id="who-name" style="color:var(--brass-light);">...</span></h1>
+    <p style="color:var(--stone);margin-top:10px;">اختر التاريخ والميعاد المناسبين، وسيتواصل معك المكتب لتأكيد الحجز.</p>
+  </div>
+</div>
+
+<div class="form-shell">
+  <div class="card">
+    <form id="form-booking">
+      <div class="field">
+        <label for="book-name">الاسم</label>
+        <input type="text" id="book-name" placeholder="سيُستخدم اسم حسابك تلقائيًا">
+      </div>
+      <div class="field">
+        <label for="book-email">البريد الإلكتروني</label>
+        <input type="email" id="book-email" required>
+      </div>
+      <div class="field">
+        <label for="book-phone">رقم الهاتف</label>
+        <input type="tel" id="book-phone" required placeholder="01xxxxxxxxx">
+      </div>
+      <div class="field">
+        <label for="book-service">نوع الاستشارة</label>
+        <select id="book-service" required>
+          <option value="الطعن أمام محكمة النقض">الطعن أمام محكمة النقض</option>
+          <option value="قضايا مدنية وتجارية">قضايا مدنية وتجارية</option>
+          <option value="قضايا جنائية">قضايا جنائية</option>
+          <option value="أحوال شخصية">أحوال شخصية</option>
+          <option value="عقود واستشارات">عقود واستشارات</option>
+          <option value="تحكيم وتسوية منازعات">تحكيم وتسوية منازعات</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="book-date">التاريخ</label>
+        <input type="date" id="book-date" required>
+      </div>
+      <div class="field">
+        <label>الميعاد المتاح</label>
+        <div class="slot-grid" id="slot-grid"></div>
+      </div>
+      <div class="field">
+        <label for="book-notes">ملخص مختصر عن القضية (اختياري)</label>
+        <textarea id="book-notes" placeholder="اكتب نبذة تساعد المحامي على التحضير للاستشارة"></textarea>
+      </div>
+      <button type="submit" class="btn btn-brass btn-block">تأكيد الحجز</button>
+      <div id="booking-msg" class="form-msg"></div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="container footer-bottom" style="border-top:none;padding-top:0;">
+    <span>© 2026 مكتب المحامي بالنقض محمد إسماعيل محمد. جميع الحقوق محفوظة.</span>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="main.js"></script>
+<script src="booking.js"></script>
+</body>
+</html>

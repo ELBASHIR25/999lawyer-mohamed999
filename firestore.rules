@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function admin() {
+      return signedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email == "alsyd2162225@gmail.com";
+    }
+
+    function validString(value, maxLength) {
+      return value is string && value.size() > 0 && value.size() <= maxLength;
+    }
+
+    function validDate(value) {
+      return value is string
+        && value.size() == 10
+        && value.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+    }
+
+    function validSlot(value) {
+      return value is string && value in [
+        "10:00 ص", "11:00 ص", "12:00 م", "01:00 م", "02:00 م",
+        "04:00 م", "05:00 م", "06:00 م", "07:00 م"
+      ];
+    }
+
+    function validService(value) {
+      return value is string && value in [
+        "الطعن أمام محكمة النقض",
+        "قضايا مدنية وتجارية",
+        "قضايا جنائية",
+        "أحوال شخصية",
+        "عقود واستشارات",
+        "تحكيم وتسوية منازعات"
+      ];
+    }
+
+    match /users/{userId} {
+      allow read, write: if signedIn() && request.auth.uid == userId;
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && validString(request.resource.data.name, 120)
+        && validString(request.resource.data.phone, 20)
+        && validService(request.resource.data.service)
+        && validDate(request.resource.data.date)
+        && validSlot(request.resource.data.slot)
+        && request.resource.data.status == "جديد"
+        && request.resource.data.lockId == bookingId;
+
+      allow read, update, delete: if admin();
+    }
+
+    match /slotLocks/{slotId} {
+      allow read: if signedIn();
+
+      allow create: if signedIn()
+        && !exists(/databases/$(database)/documents/slotLocks/$(slotId))
+        && request.resource.data.uid == request.auth.uid
+        && validDate(request.resource.data.date)
+        && validSlot(request.resource.data.slot)
+        && request.resource.data.bookingId == slotId;
+
+      allow update, delete: if admin();
+    }
+
+    match /visits/{visitId} {
+      allow create: if true;
+      allow read: if admin();
+      allow update, delete: if false;
+    }
+  }
+}

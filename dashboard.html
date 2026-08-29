@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — مكتب المحامي بالنقض محمد إسماعيل محمد</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <div class="seal"><span>م إ</span></div>
+      <div class="brand-text"><b>محمد إسماعيل محمد</b><small>المحامي بالنقض</small></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">الموقع الرئيسي</a>
+    </div>
+    <div class="nav-actions">
+      <button id="logout-btn" class="btn btn-ghost btn-sm">تسجيل الخروج</button>
+    </div>
+  </nav>
+</header>
+
+<div id="dash-root" class="dash-wrap">
+  <div class="container">
+    <div class="dash-top">
+      <div>
+        <div class="eyebrow">لوحة تحكم المكتب</div>
+        <h1 style="font-size:1.7rem;">أهلًا، <span id="admin-name" style="color:var(--brass-light);">...</span></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="dash-stats">
+      <div class="dash-stat"><b id="stat-bookings">0</b><span>إجمالي الحجوزات</span></div>
+      <div class="dash-stat"><b id="stat-visits">0</b><span>زيارات الموقع المسجّلة</span></div>
+      <div class="dash-stat"><b id="stat-clients">0</b><span>عملاء مختلفون</span></div>
+      <div class="dash-stat"><b>لحظي</b><span>تحديث تلقائي للإشعارات</span></div>
+    </div>
+
+    <div class="dash-panels">
+      <div class="panel">
+        <h3>أحدث الحجوزات <small>يظهر إشعار فوري عند كل حجز جديد</small></h3>
+        <div id="bookings-list" class="row-list"></div>
+      </div>
+      <div class="panel">
+        <h3>أحدث زيارات الموقع <small>"حد دخل الموقع"</small></h3>
+        <div id="visits-list" class="row-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="live-toast-stack"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
